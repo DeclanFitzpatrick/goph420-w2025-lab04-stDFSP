@@ -19,4 +19,4 @@ classifiers = [
     "License :: OSI Approved :: GNU General Public License v3",
 ]
 [project.urls]
-"Homepage" = "https://github.com/DeclanFitzpatrick/goph420-w2025-lab03-stDFSP"
+"Homepage" = "https://github.com/DeclanFitzpatrick/goph420-w2025-lab04-stDFSP.git"
