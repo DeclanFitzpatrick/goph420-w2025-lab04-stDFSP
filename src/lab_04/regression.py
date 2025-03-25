@@ -18,10 +18,19 @@ def multi_regress(y, Z):
     The coefficient of determination, r^2
     """
     
-    y = np.ndarray.flatten(y)
-    z = np.ndarray.flatten(Z)   
+    y = np.array(y)
+    z = np.array(Z)   
 
-    a = np.linalg.inv(np.transpose(z)*z)*(np.transpose(z)*y)  
-    print(f'a = {a}')  
-    e = y - z*a
-    print(f'e = {e}')
+    a = np.linalg.solve(z.T @ z, z.T @ y)  
+
+    e = y - z @ a
+
+
+    sr = e.T @ e
+
+    ey = y-np.mean(y)
+    st = ey.T @ ey
+
+    rsq = 1 - sr/st
+
+    return a, e, rsq
