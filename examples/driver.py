@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 from lab_04.regression import (multi_regress)
 
@@ -28,6 +29,11 @@ def main():
     print(e)
     print(rsq)
 
+    plt.plot(m, y, 'o')
+    plt.xlabel('m')
+    plt.ylabel('log10(n)')
+    plt.title('log10(n) vs m')
+    plt.show()
 
 if __name__ == "__main__":
     main()
