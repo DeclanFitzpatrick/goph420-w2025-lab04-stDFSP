@@ -78,7 +78,7 @@ def main():
     plt.ylabel('log10(n)')
     plt.title('log10(n) vs m')
     plt.legend()
-    plt.savefig('../figures/log plots.png')
+    plt.savefig('../figures/log_plots.png')
     plt.show()
 
 if __name__ == "__main__":
