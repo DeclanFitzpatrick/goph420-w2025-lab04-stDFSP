@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from lab_04.regression import (multi_regress)
 
 
 def main():
@@ -26,7 +25,7 @@ def main():
 
     plt.figure(figsize=(12,6))
     plt.plot(t, m_data, 'go', markersize=2)
-    x_list = [34,46,72,96]
+    x_list = [34, 46, 72, 96]  # via testing
     for x in x_list:
         plt.axvline(x=x, color='r',linestyle='--')
         plt.text(x + 0.5, max(m_data), f"{x} hours", color='r', fontsize=10)
