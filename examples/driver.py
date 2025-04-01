@@ -11,7 +11,7 @@ def main():
 
     k_34 = int(np.argwhere(t < 35)[-1].item())  # to extract scalar value and not return array
 
-    m = np.linspace(-0.5, 1, 9)
+    m = np.linspace(0, 1, 15)
     n = np.zeros_like(m)  # array of zeros same size as m
 
     for i, mm in enumerate(m):  # loop through m and count values in m_data that are greater than or equal to mm
@@ -33,9 +33,6 @@ def main():
 
     k_46 = int(np.argwhere(t < 46)[-1].item())
 
-    m = np.linspace(-0.5, 1, 9)
-    n = np.zeros_like(m)  # array of zeros same size as m
-
     for i, mm in enumerate(m):  # loop through m and count values in m_data that are greater than or equal to mm
         n[i] = np.count_nonzero(m_data[k_34:k_46] >= mm)  # count occurrences
     print(n)
@@ -55,9 +52,6 @@ def main():
 
     k_72= int(np.argwhere(t < 72)[-1].item())
 
-    m = np.linspace(-0.5, 1, 9)
-    n = np.zeros_like(m)  # array of zeros same size as m
-
     for i, mm in enumerate(m):  # loop through m and count values in m_data that are greater than or equal to mm
         n[i] = np.count_nonzero(m_data[k_46:k_72] >= mm)  # count occurrences
     print(n)
@@ -72,6 +66,7 @@ def main():
 
     Log3 = Z @ a  # compute predicted values
 
+    plt.grid()
     plt.plot(m, y, 'o', label='data between 47 and 72')
     plt.plot(m, Log3, '-', label='fit 3')
     plt.xlabel('m')
