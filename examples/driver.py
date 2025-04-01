@@ -4,7 +4,7 @@ from lab_04.regression import (multi_regress)
 
 
 def main():
-    data = np.loadtxt("data/M_data1.txt")
+    data = np.loadtxt("../data/M_data1.txt")
 
     t = data[:,0]  # dependent data
     m_data = data[:,1]  # independent data
