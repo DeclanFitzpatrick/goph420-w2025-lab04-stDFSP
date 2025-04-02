@@ -9,71 +9,45 @@ def main():
     t = data[:,0]  # dependent data
     m_data = data[:,1]  # independent data
 
-    k_34 = int(np.argwhere(t < 35)[-1].item())  # to extract scalar value and not return array
-
+    data_segs = [(0, 34), (35,46), (47, 72), (73, 96)]
     m = np.linspace(0, 1, 15)
     n = np.zeros_like(m)  # array of zeros same size as m
 
-    for i, mm in enumerate(m):  # loop through m and count values in m_data that are greater than or equal to mm
-        n[i] = np.count_nonzero(m_data[:k_34] >= mm)  # count occurrences
-    print(n)
-    y = np.log10(n)
-    Z = np.vstack((np.ones_like(m), m)).T  # design matrix
+    fig, axes = plt.subplots(1, 4, figsize=(12,4))
 
-    a, e, rsq = multi_regress(y, Z)  # use least square regression to find coeffs, residuals, and R^2
+    for i, (first, last) in enumerate(data_segs):
+        if first == 0:
+            k_first = 0
+        else:
+            k_first = int(np.argwhere(t < first)[-1].item()) # to extract scalar value and not return array
+        k_last = int(np.argwhere(t < last)[-1].item())
 
-    print(f'a: {a}')
-    print(f' e: {e}')
-    print(f' rsq: {rsq}')
+        for j, mm in enumerate(m):  # loop through m and count values in m_data that are greater than or equal to mm
+            n[j] = np.count_nonzero(m_data[k_first:k_last] >= mm)  # count occurrences
+        print(n)
 
-    Log1 = Z @ a  # compute predicted values
+        y = np.log10(n)
+        Z = np.vstack((np.ones_like(m), m)).T  # design matrix
 
-    plt.plot(m, y, 'o', label="data between 0 and 34")
-    plt.plot(m, Log1, '-', label='fit 1')
+        a, e, rsq = multi_regress(y, Z)  # use least square regression to find coeffs, residuals, and R^2
 
-    k_46 = int(np.argwhere(t < 46)[-1].item())
+        print(f'a: {a}')
+        print(f' e: {e}')
+        print(f' rsq: {rsq}')
 
-    for i, mm in enumerate(m):  # loop through m and count values in m_data that are greater than or equal to mm
-        n[i] = np.count_nonzero(m_data[k_34:k_46] >= mm)  # count occurrences
-    print(n)
-    y = np.log10(n)
-    Z = np.vstack((np.ones_like(m), m)).T  # design matrix
+        log_n = Z @ a  # compute predicted values
 
-    a, e, rsq = multi_regress(y, Z)  # use least square regression to find coeffs, residuals, and R^2
+        # plotting...
+        axes[i].plot(m, log_n, 'b-', linewidth=2, label='Regression Line')
+        axes[i].plot(m, y, 'ro', label=f'$y = {a[0]:.2f} + ({a[1]:.2f})m$', markersize=6)
+        axes[i].set_xlabel('Magnitude', fontsize=10)
+        axes[i].set_ylabel(r'$\log_{10}(n)$', fontsize=10)
+        axes[i].set_title(f'{first} to {last} hours', fontsize=12, fontweight='bold')
+        axes[i].legend(loc='upper right', fontsize=8, frameon=True, facecolor='white', edgecolor='black')
+        axes[i].grid(True, linestyle='--', alpha=0.6)
 
-    print(f'a: {a}')
-    print(f' e: {e}')
-    print(f' rsq: {rsq}')
-
-    Log2 = Z @ a  # compute predicted values
-
-    plt.plot(m, y, 'o', label='data between 35 and 46')
-    plt.plot(m, Log2, '-', label='fit 2')
-
-    k_72= int(np.argwhere(t < 72)[-1].item())
-
-    for i, mm in enumerate(m):  # loop through m and count values in m_data that are greater than or equal to mm
-        n[i] = np.count_nonzero(m_data[k_46:k_72] >= mm)  # count occurrences
-    print(n)
-    y = np.log10(n)
-    Z = np.vstack((np.ones_like(m), m)).T  # design matrix
-
-    a, e, rsq = multi_regress(y, Z)  # use least square regression to find coeffs, residuals, and R^2
-
-    print(f'a: {a}')
-    print(f' e: {e}')
-    print(f' rsq: {rsq}')
-
-    Log3 = Z @ a  # compute predicted values
-
-    plt.grid()
-    plt.plot(m, y, 'o', label='data between 47 and 72')
-    plt.plot(m, Log3, '-', label='fit 3')
-    plt.xlabel('m')
-    plt.ylabel('log10(n)')
-    plt.title('log10(n) vs m')
-    plt.legend()
-    plt.savefig('../figures/log_plots.png')
+    plt.tight_layout()
+    plt.savefig('../figures/log_plots.png', dpi=300)
     plt.show()
 
 if __name__ == "__main__":
