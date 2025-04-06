@@ -6,20 +6,20 @@ from lab_04.regression import (multi_regress)
 def main():
     data = np.loadtxt("../data/M_data1.txt")
 
-    t = data[:,0]  # dependent data
-    m_data = data[:,1]  # independent data
+    t = data[:, 0]  # dependent data
+    m_data = data[:, 1]  # independent data
 
-    data_segs = [(0, 34), (35,46), (47, 72), (73, 96)]
+    data_segs = [(0, 34), (35, 46), (47, 72), (73, 96)]
     m = np.linspace(0, 1, 15)
     n = np.zeros_like(m)  # array of zeros same size as m
 
-    fig, axes = plt.subplots(1, 4, figsize=(12,4))
+    fig, axes = plt.subplots(1, 4, figsize=(12, 4))
 
     for i, (first, last) in enumerate(data_segs):
         if first == 0:
             k_first = 0
         else:
-            k_first = int(np.argwhere(t < first)[-1].item()) # to extract scalar value and not return array
+            k_first = int(np.argwhere(t < first)[-1].item())  # to extract scalar value and not return array
         k_last = int(np.argwhere(t < last)[-1].item())
 
         for j, mm in enumerate(m):  # loop through m and count values in m_data that are greater than or equal to mm
@@ -49,6 +49,7 @@ def main():
     plt.tight_layout()
     plt.savefig('../figures/log_plots.png', dpi=300)
     plt.show()
+
 
 if __name__ == "__main__":
     main()
