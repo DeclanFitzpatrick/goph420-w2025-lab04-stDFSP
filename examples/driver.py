@@ -35,6 +35,7 @@ def main():
         print(f'intercept (a): {a[0]}')
         print(f'slope (b): {a[1]}')
         print(f'e: {e}')
+        print(f'e average: {np.mean(e)}')
         print(f'R²: {rsq}')
 
         log_n = Z @ a  # compute predicted values
