@@ -24,16 +24,18 @@ def main():
 
         for j, mm in enumerate(m):  # loop through m and count values in m_data that are greater than or equal to mm
             n[j] = np.count_nonzero(m_data[k_first:k_last] >= mm)  # count occurrences
-        print(n)
 
         y = np.log10(n)
         Z = np.vstack((np.ones_like(m), m)).T  # design matrix
 
         a, e, rsq = multi_regress(y, Z)  # use least square regression to find coeffs, residuals, and R^2
 
-        print(f'a: {a}')
-        print(f' e: {e}')
-        print(f' rsq: {rsq}')
+        # for report and debugging
+        print(f"{first}–{last} hours:")
+        print(f'intercept (a): {a[0]}')
+        print(f'slope (b): {a[1]}')
+        print(f'e: {e}')
+        print(f'R²: {rsq}')
 
         log_n = Z @ a  # compute predicted values
 
